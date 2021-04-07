@@ -38,6 +38,13 @@ class MyApp extends StatelessWidget {
                       letterSpacing: 2.5,
                       fontWeight: FontWeight.bold),
                 ),
+                SizedBox(
+                  height: 20.0,
+                  width: 150.0,
+                  child: Divider(
+                    color: Colors.teal.shade100,
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.all(6.0),
                   child: Card(
@@ -58,7 +65,7 @@ class MyApp extends StatelessWidget {
                     color: Colors.white,
                     margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                     child: ListTile(
-                      leading:  Icon(Icons.mail, color: Colors.teal),
+                      leading: Icon(Icons.mail, color: Colors.teal),
                       title: Text(
                         'bkdsalah@gmail.com',
                         style: TextStyle(color: Colors.teal, fontSize: 18),
@@ -75,4 +82,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
