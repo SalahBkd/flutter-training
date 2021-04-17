@@ -1,65 +1,142 @@
 import 'package:flutter/material.dart';
+import 'package:flutterbkd/quizbrain.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
-void main() {
-  runApp(MyApp());
-}
+void main() => runApp(Quizzler());
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class Quizzler extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+      home: Scaffold(
+        backgroundColor: Colors.grey.shade900,
+        body: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10.0),
+            child: QuizPage(),
+          ),
+        ),
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
-
+class QuizPage extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _QuizPageState createState() => _QuizPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class _QuizPageState extends State<QuizPage> {
+  List<Icon> scoreKeeper = [];
+  QuizBrain quizBrain = new QuizBrain();
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Expanded(
+          flex: 5,
+          child: Padding(
+            padding: EdgeInsets.all(10.0),
+            child: Center(
+              child: Text(
+                quizBrain.getQuestionText(),
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 25.0,
+                  color: Colors.white,
+                ),
+              ),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+          ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.all(15.0),
+            child: FlatButton(
+              textColor: Colors.white,
+              color: Colors.green,
+              child: Text(
+                'True',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20.0,
+                ),
+              ),
+              onPressed: () {
+                if(quizBrain.isFinished()) {
+                  Alert(context: context, title: "Max Anwsers", desc: "Click OK To Restart The Quiz.").show();
+                } else {
+                  checkAnswer(true);
+                }
+              },
+            ),
+          ),
+        ),
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.all(15.0),
+            child: FlatButton(
+              color: Colors.red,
+              child: Text(
+                'False',
+                style: TextStyle(
+                  fontSize: 20.0,
+                  color: Colors.white,
+                ),
+              ),
+              onPressed: () {
+                checkAnswer(false);
+              },
+            ),
+          ),
+        ),
+        Row(
+          children: scoreKeeper,
+        ),
+      ],
     );
   }
+
+  void checkAnswer(bool userPickedAnwser) {
+    bool answer = quizBrain.getQuestionAnswer();
+
+    setState(() {
+
+      if(quizBrain.isFinished()) {
+        Alert(
+          context: context,
+          title: 'Finished!',
+          desc: 'You\'ve reached the end of the quiz.',
+        ).show();
+
+        quizBrain.reset();
+        scoreKeeper = [];
+      } else {
+        if(answer == userPickedAnwser) {
+          setState(() {
+            scoreKeeper.add(
+                Icon(Icons.check, color: Colors.green)
+            );
+          });
+        } else {
+          setState(() {
+            scoreKeeper.add(
+                Icon(Icons.close, color: Colors.red)
+            );
+          });
+        }
+        quizBrain.nextQuesion();
+      }
+    });
+  }
 }
+
+/*
+question1: 'You can lead a cow down stairs but not up stairs.', false,
+question2: 'Approximately one quarter of human bones are in the feet.', true,
+question3: 'A slug\'s blood is green.', true,
+*/
