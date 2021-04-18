@@ -1,16 +1,10 @@
-# flutterbkd
+# Flutter Tutorial
 
-A new Flutter project.
+Code samples of Flutter concepts.
 
-## Getting Started
+## State Management
 
-This project is a starting point for a Flutter application.
+![bloc2](https://user-images.githubusercontent.com/35077725/115145516-68699380-a041-11eb-8574-a9f99bc98312.PNG)
+![provider](https://user-images.githubusercontent.com/35077725/115145519-6b648400-a041-11eb-8281-ce5b46a56f6a.PNG)
+![bloc](https://user-images.githubusercontent.com/35077725/115145520-6d2e4780-a041-11eb-830f-1061f641c9a3.PNG)
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
