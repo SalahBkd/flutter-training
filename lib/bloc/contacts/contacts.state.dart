@@ -1,7 +1,7 @@
 import 'package:flutterbkd/model/contacts.model.dart';
 
 import 'contacts.actions.dart';
-import 'enums/enums.dart';
+import '../enums/enums.dart';
 
 class ContactsState {
   List<Contact> contacts;

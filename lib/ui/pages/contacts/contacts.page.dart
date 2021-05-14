@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutterbkd/bloc/contacts.bloc.dart';
-import 'package:flutterbkd/bloc/contacts.state.dart';
+import 'package:flutterbkd/bloc/contacts/contacts.bloc.dart';
+import 'package:flutterbkd/bloc/contacts/contacts.state.dart';
 import 'package:flutterbkd/bloc/enums/enums.dart';
 import 'package:flutterbkd/ui/pages/contacts/widgets/contacts.bar.buttons.dart';
 import 'package:flutterbkd/ui/pages/contacts/widgets/contacts.list.dart';

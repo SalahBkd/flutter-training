@@ -4,7 +4,7 @@ import 'package:flutterbkd/repositories/contacts.repo.dart';
 
 import 'contacts.actions.dart';
 import 'contacts.state.dart';
-import 'enums/enums.dart';
+import '../enums/enums.dart';
 
 class ContactsBloc extends Bloc<ContactsEvent, ContactsState> {
   ContactsRepository contactsRepository;
