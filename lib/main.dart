@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutterbkd/ui/pages/contactsWithMessages/contacts.messages.dart';
 import 'bloc/contacts/contacts.bloc.dart';
 import 'bloc/contacts/contacts.state.dart';
 import 'package:flutterbkd/bloc/messages/messages.bloc.dart';
@@ -24,18 +25,20 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
+          create: (context) => new MessagesBloc(
+              initialState: MessagesState.initialState(),
+              messagesRepository: GetIt.instance<MessagesRepository>()),
+        ),
+        BlocProvider(
           create: (context) => new ContactsBloc(
               initialState: new ContactsState(
                   contacts: [],
                   requestState: RequestState.NONE,
                   errorMessage: ''),
-              contactsRepository: GetIt.instance<ContactsRepository>()),
+              contactsRepository: GetIt.instance<ContactsRepository>(),
+              messagesBloc: context.read<MessagesBloc>()),
         ),
-        BlocProvider(
-          create: (context) => new MessagesBloc(
-              initialState: MessagesState.initialState(),
-          messagesRepository: GetIt.instance<MessagesRepository>()),
-        )
+
       ],
       child: MaterialApp(
         title: 'Contacts App',
@@ -44,9 +47,10 @@ class MyApp extends StatelessWidget {
         ),
         routes: {
           '/contacts': (context) => ContactsPage(),
-          '/messages': (context) => MessagesPage()
+          '/messages': (context) => MessagesPage(),
+          '/contactsWithMessages': (context) => ContactsWithMessages()
         },
-        initialRoute: '/contacts',
+        initialRoute: '/contactsWithMessages',
       ),
     );
   }

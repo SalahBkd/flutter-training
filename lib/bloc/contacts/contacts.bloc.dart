@@ -1,4 +1,6 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutterbkd/bloc/messages/messages.actions.dart';
+import 'package:flutterbkd/bloc/messages/messages.bloc.dart';
 import 'package:flutterbkd/model/contacts.model.dart';
 import 'package:flutterbkd/repositories/contacts.repo.dart';
 
@@ -8,8 +10,9 @@ import '../enums/enums.dart';
 
 class ContactsBloc extends Bloc<ContactsEvent, ContactsState> {
   ContactsRepository contactsRepository;
+  MessagesBloc messagesBloc;
 
-  ContactsBloc({ContactsState initialState, this.contactsRepository}) : super(initialState);
+  ContactsBloc({ContactsState initialState, this.contactsRepository, this.messagesBloc}) : super(initialState);
 
   @override
   Stream<ContactsState> mapEventToState(ContactsEvent event) async* {
@@ -17,7 +20,9 @@ class ContactsBloc extends Bloc<ContactsEvent, ContactsState> {
       yield ContactsState(contacts: state.contacts, requestState: RequestState.LOADING, errorMessage: '', currentEvent: event);
       try {
         var contacts = await contactsRepository.allContacts();
-        yield ContactsState(contacts: contacts, requestState: RequestState.LOADED, errorMessage: '', currentEvent: event);
+        print(contacts[0]);
+        yield ContactsState(contacts: contacts, requestState: RequestState.LOADED, errorMessage: '', currentEvent: event, currentContact: contacts[0]);
+        messagesBloc.add(new MessagesByContactEvent(contacts[0]));
       } catch (e) {
         yield ContactsState(contacts: state.contacts, requestState: RequestState.ERROR, errorMessage: e.message, currentEvent: event);
       }
